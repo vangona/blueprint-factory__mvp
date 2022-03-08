@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
+import "css/styles.css";
 import App from 'components/App';
 import * as serviceWorker from 'serviceWorkerRegistration';
+import { Reset } from 'styled-reset';
 
 Sentry.init({
   dsn: "https://e8fe7365216b4314a1a1aa0c43785687@o1065943.ingest.sentry.io/6244136",
@@ -17,6 +19,7 @@ Sentry.init({
 
 ReactDOM.render(
   <React.StrictMode>
+    <Reset />
     <App />
   </React.StrictMode>,
   document.getElementById('root'),
