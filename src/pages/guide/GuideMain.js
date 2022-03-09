@@ -53,7 +53,7 @@ const GuideMain = () => {
   
   useEffect(() => {
     setPage(0);
-    setGuideImgSrc(GuideDB[0].imgSrc);
+    setGuideImgSrc(mainGuide[0].imgSrc);
   }, []);
 
   return (

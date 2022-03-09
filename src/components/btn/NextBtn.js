@@ -7,16 +7,20 @@ const Btn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
   position: fixed;
-  bottom: 40px;
-  right: 20px;
   z-index: 50;
-  background-color: #3f5dac;
+  bottom: 1.2rem;
+  right: 1.2rem;
+
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.5rem;
+  
   border: none;
-  border-radius: 20px;
-  width: 40px;
-  height: 40px;
-  font-size: 30px;
+  border-radius: 50%;
+
+  background-color: var(--main-blue);
   ${defaultBtnAction};
 `;
 

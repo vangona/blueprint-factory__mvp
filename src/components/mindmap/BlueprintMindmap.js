@@ -9,14 +9,15 @@ import edgehandles from "cytoscape-edgehandles";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { dbService, firebaseInstance } from "fBase";
-import { EdgeHandlesOptions } from "./EdgeHandlesOptions";
 import { defaultBtnAction, defaultContainer } from "css/styleConstants";
-import { MindmapLayout } from "./MindmapLayout";
 import removeTarget from "components/mindmap/functions/removeTarget";
-import complishTarget from "./functions/complishTarget";
-import unComplishTarget from "./functions/unComplishTarget";
-import openTarget from "./functions/openTarget";
-import cyStyle from "./cyStyle";
+import complishTarget from "components/mindmap/functions/complishTarget";
+import unComplishTarget from "components/mindmap/functions/unComplishTarget";
+import openTarget from "components/mindmap/functions/openTarget";
+import cyStyle from "components/mindmap/options/cyStyle";
+import { EdgeHandlesOptions } from "components/mindmap/options/EdgeHandlesOptions";
+import { MindmapLayout } from "components/mindmap/options/MindmapLayout";
+
 
 const Container = styled.div`
   ${defaultContainer};

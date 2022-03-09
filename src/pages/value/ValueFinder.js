@@ -38,7 +38,7 @@ function ValueFinder() {
     const tempArr = [...valueArr];
     tempArr[page] = value;
     setValueArr([...tempArr]);
-    setValue(valueArr[page + 1]);
+    setValue(valueArr[page + 1].answer);
     setPage(page + 1);
   }
 
@@ -57,11 +57,8 @@ function ValueFinder() {
   useEffect(() => {
     if (localStorage.getItem('blueprint-factory_answer')) {
       const answerArr = JSON.parse(localStorage.getItem('blueprint-factory_answer'));
-      console.log(answerArr);
-      setTimeout(() => {
-        setValueArr([...answerArr]);
-        setValue(answerArr[0].answer);  
-      })
+      setValueArr([...answerArr]);
+      setValue(answerArr[0].answer);  
     }
   }, [])
 

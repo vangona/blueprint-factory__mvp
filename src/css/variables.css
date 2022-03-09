@@ -1,4 +1,21 @@
 :root {
+  /* 색상 변수 선언 */
+
+  /* 흰색 계열 */
+  --main-white: #f2f2f2;
+  --dim-white: #dddddd;
+
+  /* 파란색 계열 */
   --main-blue: #3e83e1;
+  --light-blue: #c2d9e9;
+  --dim-blue: #a5c1d6;
+
+  /* 갈색 계열 */
+  --light-brown: #e9dcd4;
+  --dim-brown: #c8b7ad;
+
+  /* 크기 변수 선언 */
+
+  /* 네비게이션 */
   --nav-height: 50px;
 }
