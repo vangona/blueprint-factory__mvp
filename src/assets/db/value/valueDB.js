@@ -22,6 +22,15 @@ const valueDB = [
     
     잠들기전과 달라진 것은 무엇인가요?`,
     'revealed' : '이게 바뀌면, 편안해질 것 같아요.'
+  },  
+  {
+    'title' : '어린 시절의 꿈',
+    'img' : require('assets/img/value/happy-day.jpg'),
+    'question' : `어떤 연구에 따르면, 어린 시절에 꿨던 꿈이
+    현재 가지고 있는 가치관과 가깝다는 결과가 있어요.
+    
+    잊어버린 꿈이 있나요?`,
+    'revealed' : '저는 이런 꿈을 꿨었어요.'
   },
   // {
   //   'title' : '드래곤볼',

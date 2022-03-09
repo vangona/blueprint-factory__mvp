@@ -36,7 +36,8 @@ const ValueResult = () => {
   const PAGE_LENGTH = 3;
 
   const onSubmit = () => {
-    const valueObjArr = [];
+    const targetObjArr = [];
+
     valueArr.forEach(value => {
       const id = uuidv4();
       const valueObj = {
@@ -56,10 +57,54 @@ const ValueResult = () => {
         complished_reason : '',
       }
 
-      valueObjArr.push(valueObj);
+      targetObjArr.push(valueObj);
     });
 
-    localStorage.setItem('blueprint-factory_target', JSON.stringify(valueObjArr));
+    needArr.forEach(need => {
+      const id = uuidv4();
+      const needObj = {
+        id,
+        name : need,
+        description : '',
+        needs : '',
+        innerDesire : '',
+        deadline : '',
+        prize : '',
+        type : 'incomplete',
+        modified_dttm : '',
+        registered_dttm : Date.now(),
+        cancel_reason : '',
+        difficulty : '',
+        complished_feeling : '',
+        complished_reason : '',
+      }
+
+      targetObjArr.push(needObj);
+    });
+
+    doingArr.forEach(doing => {
+      const id = uuidv4();
+      const doingObj = {
+        id,
+        name : doing,
+        description : '',
+        needs : '',
+        innerDesire : '',
+        deadline : '',
+        prize : '',
+        type : 'incomplete',
+        modified_dttm : '',
+        registered_dttm : Date.now(),
+        cancel_reason : '',
+        difficulty : '',
+        complished_feeling : '',
+        complished_reason : '',
+      }
+
+      targetObjArr.push(doingObj);
+    });
+
+    localStorage.setItem('blueprint-factory_target', JSON.stringify(targetObjArr));
     navigate('/blueprint');
   }
 
@@ -91,6 +136,10 @@ const ValueResult = () => {
           }
           { page === 2 && 
             <DoingForValue valueArr={valueArr} setValueArr={setValueArr} needArr={needArr} setNeedArr={setNeedArr} doingArr={doingArr} setDoingArr={setDoingArr} />
+          }
+
+          { page === PAGE_LENGTH - 1 && 
+            <SubmitBtn onClick={onSubmit}>청사진 그리기</SubmitBtn> 
           }
           
           { page > 0 && <PrevBtn onClick={onClickPrev} /> }

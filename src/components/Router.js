@@ -9,6 +9,7 @@ import Survey from "pages/Survey";
 import ValueResult from "pages/value/ValueResult";
 import Blueprint from "pages/blueprint/Blueprint";
 import Signout from "./common/Signout";
+import QuestionSelector from "pages/value/QuestionSelector";
 
 function AppRouter() {
   return (
@@ -29,7 +30,11 @@ function AppRouter() {
         />
 
         <Route 
-          path="/value/finder" 
+          path="/value/selector" 
+          element={ <QuestionSelector /> } 
+        />
+        <Route 
+          path="/value/question/:id" 
           element={ <ValueFinder /> } 
         />
         <Route 

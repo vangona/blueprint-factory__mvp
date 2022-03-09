@@ -36,7 +36,7 @@ const GuideValue = () => {
   }
 
   const onClickNavigate = () => {
-    navigate('/value/finder');
+    navigate('/value/selector');
   }
 
   return (
