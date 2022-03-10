@@ -6,6 +6,7 @@ import { defaultContainer } from 'css/styleConstants';
 import ValueList from './common/ValueList';
 import AddBtn from 'components/btn/AddBtn';
 import ValueInput from './common/ValueInput';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   ${defaultContainer};
@@ -52,6 +53,7 @@ const WriteBox = styled.div`
 `;
 
 const ValueReminder = ({ valueArr, setValueArr }) => {
+  const { id } = useParams();
   const [value, setValue] = useState('');
   const [answerArr, setAnswerArr] = useState([]);
   const [persona, setPersona] = useState('');
@@ -74,16 +76,14 @@ const ValueReminder = ({ valueArr, setValueArr }) => {
   return (
     <Container>
       <AnswerContainer>
-        {answerArr.map((answer, index) => 
-          <AnswerBox key={index}>
-            <AnsweredQuestion>
-              {answer.question}
-            </AnsweredQuestion>
-            <AnsweredContent>
-              {answer.answer}
-            </AnsweredContent>
-          </AnswerBox>
-        )}
+        <AnswerBox>
+          <AnsweredQuestion>
+            {answerArr[id].question}
+          </AnsweredQuestion>
+          <AnsweredContent>
+            {answerArr[id].answer}
+          </AnsweredContent>
+        </AnswerBox>
       </AnswerContainer>
 
       <ValueContext>

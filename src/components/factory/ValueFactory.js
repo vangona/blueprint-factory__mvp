@@ -38,7 +38,7 @@ const ValueInput = styled.textarea`
   font-family: SsurroundAir;
 `;
 
-function ValueFactory({ page, value, setValue }) {
+function ValueFactory({ id, value, setValue }) {
 
   const onChange = (e) => {
     setValue(e.target.value);
@@ -50,10 +50,10 @@ function ValueFactory({ page, value, setValue }) {
   return (
     <Container>
       <ValueTitle>
-        {valueDB[page].title}
+        {valueDB[id].title}
       </ValueTitle>
-      <ValueImg src={valueDB[page].img} alt="사진이 없네용" />
-      <ValueLabel htmlFor="input__Value">{valueDB[page].question}</ValueLabel>
+      <ValueImg src={valueDB[id].img} alt="사진이 없네용" />
+      <ValueLabel htmlFor="input__Value">{valueDB[id].question}</ValueLabel>
       <ValueInput
         id="input__Value"
         value={value}

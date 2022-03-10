@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from "uuid";
 import NextBtn from 'components/btn/NextBtn';
@@ -27,6 +27,7 @@ const SubmitBtn = styled.button`
 
 const ValueResult = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [page, setPage] = useState(0);
   const [isLoading, SetIsLoading] = useState(true);
   const [valueArr, setValueArr] = useState([]);
@@ -129,7 +130,7 @@ const ValueResult = () => {
         :       
         <Container>
           { page === 0 && 
-            <ValueReminder valueArr={valueArr} setValueArr={setValueArr} /> 
+            <ValueReminder id={id} valueArr={valueArr} setValueArr={setValueArr} /> 
           }
           { page === 1 &&
             <NeedForValue valueArr={valueArr} setValueArr={setValueArr} needArr={needArr} setNeedArr={setNeedArr} />

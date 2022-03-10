@@ -38,7 +38,7 @@ function AppRouter() {
           element={ <ValueFinder /> } 
         />
         <Route 
-          path="/value/result" 
+          path="/value/result/:id" 
           element={ <ValueResult /> } 
         />
 
