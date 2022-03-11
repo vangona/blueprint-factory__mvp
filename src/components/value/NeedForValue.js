@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import BoldedContent from 'components/common/BoldedContent';
 import { defaultContainer } from 'css/styleConstants';
 import ValueInput from './common/ValueInput';
-import AddBtn from 'components/btn/AddBtn';
 import ValueList from './common/ValueList';
 import RightChevron from 'components/btn/RightChevron';
 import LeftChevron from 'components/btn/LeftChevron';
@@ -64,6 +63,12 @@ const NeedForValue = ({ valueArr, setValueArr, needArr, setNeedArr }) => {
     setWordPage(wordPage - 1);
   }
 
+  useEffect(() => {
+    if (!Array.isArray(needArr[0])) {
+      setNeedArr(Array.from({ length: valueArr.length }, () => []));
+    }
+  }, []);
+
   return (
     <Container>
       <ValueContainer>
@@ -106,7 +111,10 @@ const NeedForValue = ({ valueArr, setValueArr, needArr, setNeedArr }) => {
         <DeepAddBtn value={need} setValue={setNeed} arr={needArr} setArr={setNeedArr} index={wordPage} size='small' />
       </WriteBox>
 
-      <ValueList arr={needArr} setArr={setNeedArr} />
+      <ValueList arr={Array.isArray(needArr[0]) 
+        ? needArr[wordPage]
+        : needArr
+      } setArr={setNeedArr} />
     </Container>
   );
 };

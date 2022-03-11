@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import BoldedContent from 'components/common/BoldedContent';
 import { defaultContainer } from 'css/styleConstants';
 import ValueInput from './common/ValueInput';
-import AddBtn from 'components/btn/AddBtn';
 import ValueList from './common/ValueList';
+import LeftChevron from 'components/btn/LeftChevron';
+import RightChevron from 'components/btn/RightChevron';
+import DeepAddBtn from 'components/btn/DeepAddBtn';
 
 const Container = styled.div`
   ${defaultContainer};
@@ -39,20 +41,47 @@ const WriteBox = styled.div`
 `;
 
 const DoingForValue = ({ valueArr, setValueArr, needArr, setNeedArr, doingArr, setDoingArr }) => {
+  const [wordPage, setWordPage] = useState(0);
   const [doing, setDoing] = useState('');
+
+  const onClickRight = () => {
+    setWordPage(wordPage + 1);
+  }
+
+  const onClickLeft = () => {
+    setWordPage(wordPage - 1);
+  }
+
+  useEffect(() => {
+    if (!Array.isArray(doingArr[0])) {
+      setDoingArr(Array.from({ length: valueArr.length }, () => []));
+    }
+  }, []);
 
   return (
     <Container>
       <ValueContainer>
-        {valueArr.map((value, index) => 
-          <ValueContent key={index}>
-            <BoldedContent content={value} />
-          </ValueContent>
-        )}
+        <ValueContent>
+        <LeftChevron 
+            onClick={wordPage > 0 ? onClickLeft : null} 
+            style={{ 'size' : '1.2rem', 
+            'color' : wordPage > 0 
+              ? 'var(--main-blue)' 
+              : 'transparent' }} 
+          /> 
+          <BoldedContent content={valueArr[wordPage]} />
+          <RightChevron 
+            onClick={wordPage < valueArr.length - 1 ? onClickRight : null} 
+            style={{ 'size' : '1.2rem', 
+            'color' : wordPage < valueArr.length - 1
+              ? 'var(--main-blue)' 
+              : 'transparent' }} 
+          />
+        </ValueContent>
       </ValueContainer>
 
       <ValueContainer>
-        {needArr.map((need, index) => 
+        {needArr[wordPage].map((need, index) =>   
           <ValueContent key={index}>
             <BoldedContent content={need} />
           </ValueContent>
@@ -60,7 +89,7 @@ const DoingForValue = ({ valueArr, setValueArr, needArr, setNeedArr, doingArr, s
       </ValueContainer>
 
       <ValueContext>
-        위의 것들을 위해 하고 있는 일이 있으신가요?
+        {valueArr[wordPage]}을(를) 위해 하고 있는 일이 있으신가요?
       </ValueContext>
       <ValueTitle>
         앞 단계에서 빼먹은 게 있다면 다시 다녀오셔도 괜찮습니다.
@@ -68,10 +97,13 @@ const DoingForValue = ({ valueArr, setValueArr, needArr, setNeedArr, doingArr, s
 
       <WriteBox>
         <ValueInput value={doing} setValue={setDoing} />
-        <AddBtn value={doing} setValue={setDoing} arr={doingArr} setArr={setDoingArr} size='small' />
+        <DeepAddBtn value={doing} setValue={setDoing} arr={doingArr} setArr={setDoingArr} index={wordPage} size='small' />
       </WriteBox>
 
-      <ValueList arr={doingArr} setArr={setDoingArr} />
+      <ValueList arr={Array.isArray(doingArr[0]) 
+        ? doingArr[wordPage]
+        : doingArr
+      } setArr={setDoingArr} />
     </Container>
   );
 };

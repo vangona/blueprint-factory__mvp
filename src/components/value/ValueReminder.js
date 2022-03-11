@@ -78,10 +78,10 @@ const ValueReminder = ({ valueArr, setValueArr }) => {
       <AnswerContainer>
         <AnswerBox>
           <AnsweredQuestion>
-            {answerArr[id].question}
+            {answerArr.length && answerArr[id].question}
           </AnsweredQuestion>
           <AnsweredContent>
-            {answerArr[id].answer}
+            {answerArr.length && answerArr[id].answer}
           </AnsweredContent>
         </AnswerBox>
       </AnswerContainer>

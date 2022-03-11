@@ -18,7 +18,7 @@ const ValueList = ({ arr, setArr }) => {
       {arr.map((value, index) => 
         <Item key={index}>
           <Content>
-            {value}
+            {value && value}
           </Content>
           <DeleteBtn removeIndex={index} arr={arr} setArr={setArr} size='small' />
         </Item>)

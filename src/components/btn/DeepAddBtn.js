@@ -45,7 +45,7 @@ const DeepAddBtn = ({ value, arr, setValue, setArr, size, index }) => {
   const onClick = () => {
     if (value) {
       const addedArr = [...arr];
-      addedArr.push(value);
+      addedArr[index].push(value);
       setArr(addedArr);
       setValue('');  
     }
