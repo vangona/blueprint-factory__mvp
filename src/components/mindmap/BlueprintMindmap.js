@@ -701,15 +701,17 @@ function BlueprintMindmap({ userObj }) {
     if (snapshot.length !== 0) {
       makeNode(snapshot);
       makeEdge(snapshot);
-    } else {
     }
-
+    
     cy.nodes().forEach((node) => {
       if (node.data().isPrivate && id) {
         node.addClass("isPrivate");
       } else if (node.data().isComplished) {
         node.addClass("isComplished");
       } else {
+        if (node.data().type === "value") {
+          node.addClass("value");
+        }
         if (node.data().type === "longterm") {
           node.addClass("longterm");
         }
@@ -785,7 +787,6 @@ function BlueprintMindmap({ userObj }) {
 
     // 내 마인드맵 일 때 메뉴 추가
     if (!id) {
-      setUserData(userObj);
       cy.cxtmenu(ContextLongtermMenuOptions);
       cy.cxtmenu(ContextShorttermMenuOptions);
       cy.cxtmenu(ContextPlanMenuOptions);
@@ -843,8 +844,6 @@ function BlueprintMindmap({ userObj }) {
       });
     }
 
-    console.log(cy);
-
     // 노드 만들기
     function makeNode(snapshot) {
       const visited = new Array(snapshot.length);
@@ -859,21 +858,6 @@ function BlueprintMindmap({ userObj }) {
       for (let i = 0; i < snapshot.length; i++) {
         if (visited[i]) continue;
         paintNode(snapshot[i], "new");
-      }
-
-      function dfs(index) {
-        const parent = snapshot[index].id;
-
-        for (let i = 0; i < snapshot[index].childs.length; i++) {
-          let childIndex;
-          for (let j = 0; j < snapshot.length; j++) {
-            if (snapshot[j].id === snapshot[index].childs[i]) childIndex = j;
-          }
-          if (visited[childIndex]) continue;
-          paintNode(snapshot[childIndex], parent);
-          visited[childIndex] = true;
-          dfs(childIndex);
-        }
       }
 
       function paintNode(targetData, parent) {
@@ -936,31 +920,15 @@ function BlueprintMindmap({ userObj }) {
 
     // 선 만들기
     function makeEdge(snapshot) {
-      const visited = new Array(snapshot.length);
-
       // 간선 그리기
       for (let i = 0; i < snapshot.length; i++) {
-        if (visited[i]) continue;
-        dfs(i);
-      }
-
-      function dfs(index) {
-        const parent = snapshot[index];
-        if (visited[index]) return;
-
-        visited[index] = true;
-
-        for (let i = 0; i < snapshot[index].childs.length; i++) {
-          // 데이터 찾기
-          let childIndex;
-          for (let j = 0; j < snapshot.length; j++) {
-            if (snapshot[j].id === snapshot[index].childs[i]) childIndex = j;
-          }
-
-          // 데이터가 목표일 때만 간선을 그림
-
-          paintEdge(parent.id, snapshot[childIndex].id);
-          dfs(childIndex);
+        if (!snapshot[i].parents) continue;
+        for (let j = 0; j < cy.nodes().length; j++) {
+          snapshot[i].parents.forEach(parentId => {
+            if (cy.nodes()[j].data().id === parentId) {
+              paintEdge(parentId, snapshot[i].id)
+            }
+          })
         }
       }
 

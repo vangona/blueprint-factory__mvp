@@ -7,6 +7,7 @@
     const nodeTextColor = "black";
     const nodeColor = "white";
 
+    const valueColor = "navy";
     const longtermColor = "red";
     const shorttermColor = "blue";
     const planColor = "skyblue";
@@ -48,6 +49,14 @@ const cyStyle = [
   },
 
   // node types
+  {
+    selector: ".value",
+    style: {
+      "border-color": valueColor,
+      "background-color": valueColor,
+      // 'label': 'data(label)'
+    },
+  },
   {
     selector: ".longterm",
     style: {

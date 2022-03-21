@@ -37,10 +37,9 @@ const ValueResult = () => {
 
   const PAGE_LENGTH = 3;
 
-  const onSubmit = () => {
-    const targetObjArr = [];
-
-    valueArr.forEach(value => {
+  const targetObjArr = [];
+  const saveValueArr = () => {
+    valueArr.forEach((value, index) => {
       const id = uuidv4();
       const valueObj = {
         id,
@@ -51,6 +50,7 @@ const ValueResult = () => {
         deadline : '',
         prize : '',
         type : 'value',
+        parents : [],
         modified_dttm : '',
         registered_dttm : Date.now(),
         cancel_reason : '',
@@ -59,10 +59,14 @@ const ValueResult = () => {
         complished_reason : '',
       }
 
+      saveNeedArr(index, id);
+      saveDoingArr(index, id);
       targetObjArr.push(valueObj);
     });
+  }
 
-    needArr.forEach(need => {
+  const saveNeedArr = (index, parentId) => {
+    needArr[index].forEach(need => {
       const id = uuidv4();
       const needObj = {
         id,
@@ -73,6 +77,7 @@ const ValueResult = () => {
         deadline : '',
         prize : '',
         type : 'incomplete',
+        parents : [parentId],
         modified_dttm : '',
         registered_dttm : Date.now(),
         cancel_reason : '',
@@ -83,8 +88,10 @@ const ValueResult = () => {
 
       targetObjArr.push(needObj);
     });
+  }
 
-    doingArr.forEach(doing => {
+  const saveDoingArr = (index, parentId) => {
+    doingArr[index].forEach(doing => {
       const id = uuidv4();
       const doingObj = {
         id,
@@ -95,6 +102,7 @@ const ValueResult = () => {
         deadline : '',
         prize : '',
         type : 'incomplete',
+        parents : [parentId],
         modified_dttm : '',
         registered_dttm : Date.now(),
         cancel_reason : '',
@@ -105,9 +113,12 @@ const ValueResult = () => {
 
       targetObjArr.push(doingObj);
     });
+  }
 
+  const onSubmit = () => {
+    saveValueArr();
     localStorage.setItem('blueprint-factory_target', JSON.stringify(targetObjArr));
-    navigate('/blueprint');
+    navigate('/blueprint')
   }
 
   const onClickNext = () => {
