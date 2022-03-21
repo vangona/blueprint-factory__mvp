@@ -16,6 +16,7 @@ const Container = styled.div`
   font-family: SsurroundAir;
   line-height: 160%;
   gap: 10px;
+  min-height: 300px;
 `;
 
 const SubmitBtn = styled.button`
@@ -113,11 +114,39 @@ const ValueResult = () => {
     setPage(page + 1);
   }
 
+  const onClickReturn = () => {
+    navigate(`/value/question/${id}`)
+  }
+
   const onClickPrev = () => {
     setPage(page - 1);
   }
 
+  const getAnswers = () => {
+    if (localStorage.getItem('blueprint-factory_value')) {
+      const data = JSON.parse(localStorage.getItem('blueprint-factory_value'));
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id === id) {
+          console.log(data[i]);  
+          setValueArr(data[i].valueArr);
+          setNeedArr(data[i].needArr);
+          setDoingArr(data[i].doingArr);
+        }
+      }
+    }
+  }
+
   useEffect(() => {
+    if (!localStorage.getItem('blueprint-factory_value')) {
+      const data = {
+        id,
+        valueArr: ['섹시함', '뀨'],
+        needArr: [['근육', '돈'], ['귀여움', '큐트함']],
+        doingArr: [['운동', '공부'], ['귀여움 단련', '싱긋 웃기']]
+      }
+      localStorage.setItem('blueprint-factory_value', JSON.stringify([data]));
+    }
+    getAnswers();
     setTimeout(() => {
       SetIsLoading(false);
     });
@@ -143,7 +172,7 @@ const ValueResult = () => {
             <SubmitBtn onClick={onSubmit}>청사진 그리기</SubmitBtn> 
           }
           
-          { page > 0 && <PrevBtn onClick={onClickPrev} /> }
+          <PrevBtn onClick={page > 0 ? onClickPrev : onClickReturn} />
           { page < PAGE_LENGTH - 1 && <NextBtn onClick={onClickNext} /> }
         </Container>
       }

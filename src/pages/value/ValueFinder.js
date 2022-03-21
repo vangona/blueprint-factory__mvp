@@ -9,6 +9,7 @@ import ValueFactory from "components/factory/ValueFactory";
 
 const Container = styled.div`
   ${defaultContainer};
+  justify-content: flex-start;
 `;
 
 function ValueFinder() {
@@ -30,7 +31,7 @@ function ValueFinder() {
   }
   
   const onClickReturn = () => {
-    navigate('/guide/value');
+    navigate('/value/selector');
   }
 
   useEffect(() => {

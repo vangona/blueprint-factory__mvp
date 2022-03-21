@@ -1,5 +1,9 @@
 import { css } from "styled-components";
 
+export const defaultWrapper = css`
+  position: relative;
+`;
+
 export const defaultContainer = css`
   display: flex;
   flex-direction: column;

@@ -6,8 +6,15 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   ${defaultContainer};
+  justify-content: center;
   font-family: SsurroundAir;
   color: var(--main-blue);
+`;
+
+const Title = styled.h1`
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
 `;
 
 const QuestionList = styled.ul`
@@ -22,6 +29,8 @@ const QuestionItem = styled.li`
   border: 1px solid black;
   padding: 10px 20px;
   border-radius: 10px;
+  width: 60vw;
+  max-width: 300px;
   ${defaultBtnAction};
 `;
 
@@ -34,6 +43,9 @@ const QuestionSelector = () => {
 
   return (
     <Container>
+      <Title>
+        맘에 드는 질문을 골라주세요.
+      </Title>
       <QuestionList>
         {valueDB.map((value, index) => 
           <QuestionItem key={index} onClick={() => {onClick(index)}} >

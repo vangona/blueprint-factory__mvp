@@ -5,13 +5,13 @@ import 'firebase/storage';
 import 'firebase/messaging';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAyWUFvA5F9Kz9WTr6Wfzbt2QYUZLouyr0",
-  authDomain: "blueprint-maker.firebaseapp.com",
-  projectId: "blueprint-maker",
-  storageBucket: "blueprint-maker.appspot.com",
-  messagingSenderId: "746433001477",
-  appId: "1:746433001477:web:acce2d2088ad087f93046c",
-  measurementId: "G-T09W6YS0ZP",
+  apiKey: "AIzaSyBwu0EMwQd0MD1sdUXhtc7THdKfn83crc4",
+  authDomain: "blueprint-factory-mvp.firebaseapp.com",
+  projectId: "blueprint-factory-mvp",
+  storageBucket: "blueprint-factory-mvp.appspot.com",
+  messagingSenderId: "284503205805",
+  appId: "1:284503205805:web:a070cbb5cd17a79c2e2324",
+  measurementId: "G-WG5FLVQEJS"
 };
 
 if (!firebase.apps.length) {
