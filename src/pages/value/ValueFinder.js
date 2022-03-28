@@ -16,16 +16,21 @@ function ValueFinder() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [value, setValue] = useState('');
-  const [valueArr, setValueArr] = useState(Array.from({ length : valueDB.length }, () => ''));
+  const [valueArr, setValueArr] = useState([]);
 
   const onClickResult = () => {
     const answerArr = [...valueArr];
-    answerArr[id] = {
-      'question' : valueDB[id].revealed,
-      'answer' : value
+    const answerObj = {
+      id,
+      question : valueDB[id].revealed,
+      answer : value
     }
 
-    localStorage.setItem('blueprint-factory_answer', JSON.stringify(answerArr));
+    const updatedArr = answerArr.filter(answer => answer.id != id);
+
+    updatedArr.push(answerObj);
+
+    localStorage.setItem('blueprint-factory_answer', JSON.stringify(updatedArr));
 
     navigate(`/value/result/${id}`);
   }
@@ -38,8 +43,10 @@ function ValueFinder() {
     if (localStorage.getItem('blueprint-factory_answer')) {
       const answerArr = JSON.parse(localStorage.getItem('blueprint-factory_answer'));
       setValueArr([...answerArr]);
-      if (answerArr[id]) {
-        setValue(answerArr[id].answer);  
+      for (let i = 0; i < answerArr.length; i++) {
+        if (answerArr[i].id == id) {
+          setValue(answerArr[i].answer);          
+        }
       }
     }
   }, [])

@@ -32,18 +32,14 @@ function BlueprintFactory({ userObj }) {
 
   const getParent = async () => {
     if (id) {
-      await dbService
-        .collection("targets")
-        .where("id", "==", id)
-        .get()
-        .then((snapshot) => {
-          const data = snapshot.docs.map((el) => el.data());
-          setParent(...data);
+      const targetData = JSON.parse(localStorage.getItem('blueprint-factory_target'));
+
+      targetData.forEach(target => {
+        if (target.id === id) {
+          setParent(target);
           setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+        }
+      })
     } else {
       const initParent = {
         name: "new",

@@ -81,7 +81,7 @@ function BlueprintMindmap({ userObj }) {
         contentStyle: {},
         select(ele) {
           navigate({
-            pathname: `/blueprint/targets/${ele.id()}`,
+            pathname: `/factory/targets/${ele.id()}`,
           });
         },
         enabled: true,
@@ -92,7 +92,7 @@ function BlueprintMindmap({ userObj }) {
         contentStyle: {},
         select(ele) {
           navigate({
-            pathname: `/blueprint/routine/${ele.id()}`,
+            pathname: `/factory/routine/${ele.id()}`,
           });
         },
         enabled: true,
@@ -155,7 +155,7 @@ function BlueprintMindmap({ userObj }) {
         contentStyle: {},
         select(ele) {
           navigate({
-            pathname: `/blueprint/targets/${ele.id()}`,
+            pathname: `/factory/targets/${ele.id()}`,
           });
         },
         enabled: true,
@@ -166,7 +166,7 @@ function BlueprintMindmap({ userObj }) {
         contentStyle: {},
         select(ele) {
           navigate({
-            pathname: `/blueprint/plan/${ele.id()}`,
+            pathname: `/factory/plan/${ele.id()}`,
           });
         },
         enabled: true,
@@ -177,7 +177,7 @@ function BlueprintMindmap({ userObj }) {
         contentStyle: {},
         select(ele) {
           navigate({
-            pathname: `/blueprint/routine/${ele.id()}`,
+            pathname: `/factory/routine/${ele.id()}`,
           });
         },
         enabled: true,
@@ -239,7 +239,7 @@ function BlueprintMindmap({ userObj }) {
         contentStyle: {},
         select(ele) {
           navigate({
-            pathname: `/blueprint/todo/${ele.id()}`,
+            pathname: `/factory/todo/${ele.id()}`,
           });
         },
         enabled: true,
@@ -469,7 +469,7 @@ function BlueprintMindmap({ userObj }) {
         contentStyle: {},
         select(ele) {
           navigate({
-            pathname: `/blueprint/incomplete/${ele.id()}`,
+            pathname: `/factory/incomplete/${ele.id()}`,
           });
         },
         enabled: true,
@@ -678,7 +678,7 @@ function BlueprintMindmap({ userObj }) {
     const predecessorsColor = "#1e90ff";
 
     // 노드 크기
-    const nodeMaxSize = 100;
+    const nodeMaxSize = 50;
     const nodeMinSize = 20;
     const nodeActiveSize = 70;
 
@@ -860,15 +860,17 @@ function BlueprintMindmap({ userObj }) {
         paintNode(snapshot[i], "new");
       }
 
+      cy.nodes().forEach(node => {
+        node.style("font-size", fontMaxSize);
+        node.style("width", nodeMaxSize);
+        node.style("height", nodeMaxSize);
+      });
+
       function paintNode(targetData, parent) {
         // 변수 선언
         const container = document.createElement("div");
-        const nodeSize = nodeMaxSize;
-
         // 컨테이너 스타일링
         container.style.userSelect = "none";
-        container.style.width = nodeSize;
-        container.style.height = nodeSize;
 
         container.style.fontFamily = "SsurroundAir";
         container.style.textAlign = "center";

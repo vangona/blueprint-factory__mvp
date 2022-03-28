@@ -55,12 +55,16 @@ const WriteBox = styled.div`
 const ValueReminder = ({ valueArr, setValueArr }) => {
   const { id } = useParams();
   const [value, setValue] = useState('');
-  const [answerArr, setAnswerArr] = useState([]);
+  const [answer, setAnswer] = useState([]);
   const [persona, setPersona] = useState('');
 
   const loadAnswer = () => {
     const savedArr = JSON.parse(localStorage.getItem('blueprint-factory_answer'));
-    setAnswerArr(savedArr);
+    for (let i = 0; i < savedArr.length; i++) {
+      if (savedArr[i].id === id) {
+        setAnswer(savedArr[i]);
+      }
+    }
   }
 
   const loadPersona = () => {
@@ -78,10 +82,10 @@ const ValueReminder = ({ valueArr, setValueArr }) => {
       <AnswerContainer>
         <AnswerBox>
           <AnsweredQuestion>
-            {answerArr.length && answerArr[id].question}
+            {answer && answer.question}
           </AnsweredQuestion>
           <AnsweredContent>
-            {answerArr.length && answerArr[id].answer}
+            {answer && answer.answer}
           </AnsweredContent>
         </AnswerBox>
       </AnswerContainer>

@@ -103,10 +103,10 @@ function TermChoice({ parent }) {
   const onClick = (e) => {
     const name = e.target.getAttribute("name");
     if (name === "longterm") {
-      navigate(`/blueprint/longterm${parent ? `/${parent.id}` : ""}`);
+      navigate(`/factory/longterm${parent ? `/${parent.id}` : ""}`);
     }
     if (name === "shortterm") {
-      navigate(`/blueprint/shortterm${parent ? `/${parent.id}` : ""}`);
+      navigate(`/factory/shortterm${parent ? `/${parent.id}` : ""}`);
     }
   };
 

@@ -31,6 +31,7 @@ const ValueResult = () => {
   const { id } = useParams();
   const [page, setPage] = useState(0);
   const [isLoading, SetIsLoading] = useState(true);
+  const [localstorageArr, setLocalstorageArr] = useState([]);
   const [valueArr, setValueArr] = useState([]);
   const [needArr, setNeedArr] = useState([]);
   const [doingArr, setDoingArr] = useState([]);
@@ -118,6 +119,20 @@ const ValueResult = () => {
   const onSubmit = () => {
     saveValueArr();
     localStorage.setItem('blueprint-factory_target', JSON.stringify(targetObjArr));
+
+    const updatedArr = localstorageArr.filter(answer => answer.id != id);
+
+    const saveObj = {
+      id,
+      valueArr,
+      needArr,
+      doingArr
+    }
+
+    updatedArr.push(saveObj);
+
+    localStorage.setItem('blueprint-factory_value', JSON.stringify(updatedArr));
+
     navigate('/blueprint')
   }
 
@@ -138,25 +153,16 @@ const ValueResult = () => {
       const data = JSON.parse(localStorage.getItem('blueprint-factory_value'));
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === id) {
-          console.log(data[i]);  
           setValueArr(data[i].valueArr);
           setNeedArr(data[i].needArr);
           setDoingArr(data[i].doingArr);
         }
       }
+      setLocalstorageArr(data);
     }
   }
 
   useEffect(() => {
-    if (!localStorage.getItem('blueprint-factory_value')) {
-      const data = {
-        id,
-        valueArr: ['섹시함', '뀨'],
-        needArr: [['근육', '돈'], ['귀여움', '큐트함']],
-        doingArr: [['운동', '공부'], ['귀여움 단련', '싱긋 웃기']]
-      }
-      localStorage.setItem('blueprint-factory_value', JSON.stringify([data]));
-    }
     getAnswers();
     setTimeout(() => {
       SetIsLoading(false);

@@ -316,7 +316,7 @@ function ShorttermFactory({ userObj, parent }) {
 
   const onClickReturn = (e) => {
     e.preventDefault();
-    navigate("/");
+    navigate("/blueprint");
   };
 
   const onClickPrev = (e) => {

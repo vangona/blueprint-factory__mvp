@@ -9,7 +9,6 @@ import {
 } from "react-icons/io";
 import { FaExchangeAlt } from "react-icons/fa";
 import { defaultBtnAction, defaultContainer } from "css/styleConstants";
-import { dbService, firebaseInstance } from "fBase";
 import BackgroundTopCloud from "components/background/BackgroundTopCloud";
 import BackgroundBottomCloud from "components/background/BackgroundBottomCloud";
 import LongtermParent from "components/factory/longterm/LongtermParent";
@@ -19,6 +18,9 @@ import LongtermNeed from "components/factory/longterm/LongtermNeed";
 import LongtermDeadline from "components/factory/longterm/LongtermDeadline";
 import LongtermCheck from "components/factory/longterm/LongtermCheck";
 import LongtermSimple from "components/factory/longterm/LongtermSimple";
+import updateTarget from "components/function/updateTarget";
+import saveTarget from "components/function/saveTarget";
+import addChild from "components/function/addChild";
 
 const Container = styled.div`
   ${defaultContainer}
@@ -126,127 +128,73 @@ function LongtermFactory({ userObj, parent }) {
       childIds.push(childId);
       await makeChild(need, childId, isInComplete ? parent.id : targetId);
     });
+
+    const targetObj = {
+      id : targetId,
+      name : name,
+      description : explain,
+      needs : needArr,
+      innerDesire : desire,
+      deadline : deadline,
+      prize : '',
+      type : 'longterm',
+      parents : [parent.id],
+      modified_dttm : '',
+      registered_dttm : Date.now(),
+      cancel_reason : '',
+      difficulty : '',
+      complished_feeling : '',
+      complished_reason : '',
+    }
+
     if (isInComplete) {
-      await dbService
-        .collection("targets")
-        .doc(parent.id)
-        .update({
-          id: parent.id,
-          uid: userObj.uid,
-          name,
-          desire,
-          explain,
-          deadline: deadline ? new Date(deadline) : "",
-          prize: "",
-          needArr,
-          createdAt: Date.now(),
-          modifiedAt: 0,
-          isComplete: true,
-          isComplished: false,
-          isOpen: true,
-          isPrivate,
-          type: "longterm",
-          parentId: [parent.parentId[0]],
-          childs: childIds,
-          completeFeeling: "",
-          cancelReason: "",
-        })
-        .then(async () => {
-          alert("구름이 완성 됐어요!");
-          navigate("/");
+      await updateTarget(parent.id, targetObj)            
+        .then(() => {
+          console.log("success");
+          alert("큰 구름이 하나 만들어졌어요!");
+          navigate("/blueprint");
         })
         .catch((error) => {
           console.log(error.message);
         });
     } else {
-      await dbService
-        .collection("targets")
-        .doc(targetId)
-        .set({
-          id: targetId,
-          uid: userObj.uid,
-          name,
-          desire,
-          explain,
-          deadline: deadline ? new Date(deadline) : "",
-          prize: "",
-          needArr,
-          createdAt: Date.now(),
-          modifiedAt: 0,
-          isComplete: true,
-          isComplished: false,
-          isOpen: true,
-          isPrivate,
-          type: "longterm",
-          parentId: [parent.id],
-          childs: childIds,
-          completeFeeling: "",
-          cancelReason: "",
-        })
+      await saveTarget(targetId, targetObj)
         .then(async () => {
-          if (parent.id !== "new") {
-            dbService
-              .collection("targets")
-              .doc(`${parent.id}`)
-              .update({
-                childs:
-                  firebaseInstance.firestore.FieldValue.arrayUnion(targetId),
-              })
-              .then(() => {
-                console.log("success");
-                alert("큰 구름이 하나 만들어졌어요!");
-                navigate("/");
-              })
-              .catch((error) => {
-                console.log(error.message);
-              });
-          } else {
-            await dbService
-              .collection("users")
-              .doc(`${userObj.uid}`)
-              .update({
-                isBlueprint: true,
-              })
-              .then(() => {
-                alert("큰 구름이 하나 만들어졌어요!");
-                navigate("/");
-              })
-              .catch((error) => {
-                console.log(error.message);
-              });
-          }
-        })
-        .catch((error) => {
+          await addChild(parent.id, targetId)
+            .then(() => {
+              console.log("success");
+              alert("큰 구름이 하나 만들어졌어요!");
+              navigate("/blueprint");
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
+        }).catch((error) => {
           console.log(error.message);
         });
     }
   };
 
   const makeChild = async (need, childId, parentId) => {
-    await dbService
-      .collection("targets")
-      .doc(childId)
-      .set({
-        id: childId,
-        uid: userObj.uid,
-        name: need,
-        desire: "",
-        explain: "",
-        deadline: "",
-        prize: "",
-        needArr: [],
-        createdAt: Date.now(),
-        modifiedAt: 0,
-        isComplete: false,
-        isComplished: false,
-        isOpen: true,
-        isPrivate,
-        type: "incomplete",
-        parentId: [parentId],
-        childs: [],
-        completeFeeling: "",
-        cancelReason: "",
-      });
+    const childObj = {
+      id : childId,
+      name : need,
+      description : '',
+      needs : [],
+      innerDesire : '',
+      deadline : '',
+      prize : '',
+      type : 'incomplete',
+      parents : [parentId],
+      modified_dttm : '',
+      registered_dttm : Date.now(),
+      cancel_reason : '',
+      difficulty : '',
+      complished_feeling : '',
+      complished_reason : '',
+    }
+
+    saveTarget(childId, childObj);
   };
 
   const onClickPlus = (value) => {
