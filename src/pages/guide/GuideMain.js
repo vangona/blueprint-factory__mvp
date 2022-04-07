@@ -24,7 +24,6 @@ const Comment = styled.div`
 `;
 
 const FindValueBtn = styled.button`
-  margin-top: 50px;
   font-family: Ssurround;
   padding: 10px 20px;
   background-color: white;
@@ -39,8 +38,12 @@ const GuideMain = () => {
   const [page, setPage] = useState(0);
   const navigate = useNavigate();
 
-  const onClickValue = () => {
+  const onClickFinder = () => {
     navigate('/guide/value');
+  }
+
+  const onClickDevider = () => {
+    navigate('/');
   }
 
   const onClickNext = () => {
@@ -64,9 +67,16 @@ const GuideMain = () => {
       </Comment>
       {page !== 0 && <PrevBtn onClick={onClickPrev} />}
       {page < mainGuide.length - 1 && <NextBtn onClick={onClickNext} />}
-      {page === mainGuide.length - 1 && <FindValueBtn onClick={onClickValue} >
-        잊었던 목표 찾으러가기
-      </FindValueBtn>}
+      {page === mainGuide.length - 1 && 
+      <>
+        <FindValueBtn onClick={onClickFinder} >
+          잊었던 목표 찾으러가기
+        </FindValueBtn>
+        <FindValueBtn onClick={onClickDevider} >
+          가지고 있는 목표 나누러가기
+        </FindValueBtn>
+      </>
+      }
     </Container>
   );
 };

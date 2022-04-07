@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { authService } from 'fBase';
 import cloud from "assets/img/background/top-cloud.png";
 import MoveBtn from 'components/btn/MoveBtn';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -51,6 +52,10 @@ const MvpVideo = styled.iframe`
   max-width: 800px;
 `;
 
+const SkipIntro = styled.a`
+  font-family: SsurroundAir;
+`;
+
 const Home = () => {
   const onClick = () => {
     authService.signInAnonymously().then(id => console.log(id));
@@ -75,7 +80,12 @@ const Home = () => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen>
       </MvpVideo>
-      <MoveBtn value={'Mvp 보러가기'} route={'/guide/main'} prevFunc={onClick} />
+      <MoveBtn value={'Mvp 체험하기'} route={'/guide/main'} prevFunc={onClick} />
+      <Link to={'/guide/select'}>
+        <SkipIntro>
+          인트로 건너뛰기
+        </SkipIntro>
+      </Link>
     </Container>
   );
 };

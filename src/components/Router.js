@@ -10,6 +10,7 @@ import ValueResult from "pages/value/ValueResult";
 import Blueprint from "pages/blueprint/Blueprint";
 import Signout from "./common/Signout";
 import QuestionSelector from "pages/value/QuestionSelector";
+import GuideSelector from "pages/guide/GuideSelector";
 
 function AppRouter() {
   return (
@@ -28,6 +29,11 @@ function AppRouter() {
           path="/guide/value" 
           element={ <GuideValue />}  
         />
+        <Route 
+          path="/guide/select" 
+          element={ <GuideSelector />}  
+        />
+
 
         <Route 
           path="/value/selector" 
