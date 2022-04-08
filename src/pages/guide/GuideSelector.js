@@ -27,7 +27,7 @@ const GuideSelector = () => {
   }
 
   const onClickDevider = () => {
-    navigate('/');
+    navigate('/factory/targets');
   }
 
   return (
