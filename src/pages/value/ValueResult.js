@@ -31,7 +31,8 @@ const ValueResult = () => {
   const { id } = useParams();
   const [page, setPage] = useState(0);
   const [isLoading, SetIsLoading] = useState(true);
-  const [localstorageArr, setLocalstorageArr] = useState([]);
+  const [localStorageTargetArr, setLocalStorageTargetArr] = useState([]);
+  const [localStorageValueArr, setLocalStorageValueArr] = useState([]);
   const [valueArr, setValueArr] = useState([]);
   const [needArr, setNeedArr] = useState([]);
   const [doingArr, setDoingArr] = useState([]);
@@ -118,9 +119,11 @@ const ValueResult = () => {
 
   const onSubmit = () => {
     saveValueArr();
-    localStorage.setItem('blueprint-factory_target', JSON.stringify(targetObjArr));
+    const updatedValueArr = [...localStorageTargetArr, ...targetObjArr];
+    console.log(updatedValueArr);
+    localStorage.setItem('blueprint-factory_target', JSON.stringify(updatedValueArr));
 
-    const updatedArr = localstorageArr.filter(answer => answer.id != id);
+    const updatedArr = localStorageValueArr.filter(answer => answer.id != id);
 
     const saveObj = {
       id,
@@ -149,6 +152,11 @@ const ValueResult = () => {
   }
 
   const getAnswers = () => {
+    if (localStorage.getItem('blueprint-factory_target')) {
+      const data = JSON.parse(localStorage.getItem('blueprint-factory_target'));
+      console.log(data);
+      setLocalStorageTargetArr(data);
+    }
     if (localStorage.getItem('blueprint-factory_value')) {
       const data = JSON.parse(localStorage.getItem('blueprint-factory_value'));
       for (let i = 0; i < data.length; i++) {
@@ -158,7 +166,7 @@ const ValueResult = () => {
           setDoingArr(data[i].doingArr);
         }
       }
-      setLocalstorageArr(data);
+      setLocalStorageValueArr(data);
     }
   }
 

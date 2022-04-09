@@ -1061,7 +1061,7 @@ function BlueprintMindmap({ userObj }) {
     if (data) {
       setSnapshot(JSON.parse(data));
     } else {
-      navigate('/guide');
+      navigate('/');
     }
   }
 
